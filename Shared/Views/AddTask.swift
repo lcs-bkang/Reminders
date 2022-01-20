@@ -13,6 +13,8 @@ struct AddTask: View {
     @State private var description = ""
     @State private var priority = TaskPriority.low
     
+    // Whether to show this view
+    @Binding var showing: Bool
     
     var body: some View {
         NavigationView {
@@ -40,12 +42,12 @@ struct AddTask: View {
     }
     
     func saveTask() {
-        
+        showing = false
     }
 }
 
 struct AddTask_Previews: PreviewProvider {
     static var previews: some View {
-        AddTask()
+        AddTask(showing: .constant(true))
     }
 }

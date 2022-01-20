@@ -18,7 +18,6 @@ struct RemindersApp: App {
                 ContentView(store: store)
                 
             }
-            .navigationTitle("Reminders")
         }
     }
 }

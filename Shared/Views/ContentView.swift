@@ -9,14 +9,28 @@ import SwiftUI
 
 struct ContentView: View {
     
+    // Stores all tasks
     @ObservedObject var store: TaskStore
+    
+    // Control whether the add task is showing
+    @State private var showingAddTask = false
     
     var body: some View {
         
         List(store.tasks) { task in
             TaskCell(task: task)
         }
-        .padding()
+        .navigationTitle("Reminders")
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button("Add") {
+                    showingAddTask = true
+                }
+            }
+        }
+        .sheet(isPresented: $showingAddTask) {
+            AddTask(showing: $showingAddTask)
+        }
     }
 }
 
