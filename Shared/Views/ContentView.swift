@@ -12,15 +12,21 @@ struct ContentView: View {
     @ObservedObject var store: TaskStore
     
     var body: some View {
-        List(store.tasks) { task in
-            TaskCell(task: task)
+        
+        NavigationView {
+            List(store.tasks) { task in
+                TaskCell(task: task)
+            }
+            .padding()
         }
-        .padding()
+        .navigationTitle("Reminders")
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(store: testStore)
+        NavigationView {
+            ContentView(store: testStore)
+        }
     }
 }
