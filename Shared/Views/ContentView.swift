@@ -13,13 +13,10 @@ struct ContentView: View {
     
     var body: some View {
         
-        NavigationView {
-            List(store.tasks) { task in
-                TaskCell(task: task)
-            }
-            .padding()
+        List(store.tasks) { task in
+            TaskCell(task: task)
         }
-        .navigationTitle("Reminders")
+        .padding()
     }
 }
 

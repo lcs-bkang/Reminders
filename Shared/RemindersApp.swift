@@ -16,7 +16,9 @@ struct RemindersApp: App {
         WindowGroup {
             NavigationView {
                 ContentView(store: store)
+                
             }
+            .navigationTitle("Reminders")
         }
     }
 }
