@@ -24,26 +24,54 @@ struct ContentView: View {
     // This is because a property with @State has changed
     @State var listShouldUpdate = false
     
+    // What priority of tasks to show
+    @State private var selectedPriorityForVisibleTasks: VisibleTaskPriority = .all
+    
     var body: some View {
+        // Has the list been asked to update
         let _ = print("listShouldUpdate has been toggled.  Current value is :\(listShouldUpdate)")
-        List {
-            ForEach(store.tasks) { task in
-                
-                if showingCompletedTask {
-                    // Show all tasks
-                    TaskCell(task: task, triggersUpdate: .constant(true))
-                } else {
-                    
-                    // Only show incomplete tasks
-                    if task.completed == false {
-                        TaskCell(task: task, triggersUpdate: $listShouldUpdate)
-                    }
-                    
-                }
+        
+        // What is the selected priority for task filtering
+        let _ = print("Filtering tasks by this priority: \(selectedPriorityForVisibleTasks)")
+        
+        VStack {
+            
+            // Label for picker
+            Text("Filter by")
+                .font(Font.caption.smallCaps())
+                .foregroundColor(.secondary)
+            
+            // Picker to allow users to select what tasks to show
+            Picker("Priority", selection: $selectedPriorityForVisibleTasks) {
+                Text(VisibleTaskPriority.all.rawValue)
+                    .tag(VisibleTaskPriority.all)
+                Text(VisibleTaskPriority.low.rawValue)
+                    .tag(VisibleTaskPriority.low)
+                Text(VisibleTaskPriority.medium.rawValue)
+                    .tag(VisibleTaskPriority.medium)
+                Text(VisibleTaskPriority.high.rawValue)
+                    .tag(VisibleTaskPriority.high)
             }
-            // View modifiers invokes the function of the view model, "store"
-            .onDelete(perform: store.deleteItem)
-            .onMove(perform: store.moveItems)
+            .pickerStyle(.segmented)
+            List {
+                ForEach(store.tasks) { task in
+                    
+                    if showingCompletedTask {
+                        // Show all tasks
+                        TaskCell(task: task, triggersUpdate: .constant(true))
+                    } else {
+                        
+                        // Only show incomplete tasks
+                        if task.completed == false {
+                            TaskCell(task: task, triggersUpdate: $listShouldUpdate)
+                        }
+                        
+                    }
+                }
+                // View modifiers invokes the function of the view model, "store"
+                .onDelete(perform: store.deleteItem)
+                .onMove(perform: store.moveItems)
+            }
         }
         .navigationTitle("Reminders")
         .toolbar {
