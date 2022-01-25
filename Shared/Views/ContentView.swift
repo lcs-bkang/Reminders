@@ -22,6 +22,7 @@ struct ContentView: View {
             }
             // View modifiers invokes the function of the view model, "store"
             .onDelete(perform: store.deleteItem)
+            .onMove(perform: store.moveItems)
         }
         .navigationTitle("Reminders")
         .toolbar {
@@ -29,6 +30,9 @@ struct ContentView: View {
                 Button("Add") {
                     showingAddTask = true
                 }
+            }
+            ToolbarItem(placement: .navigationBarLeading) {
+                EditButton()
             }
         }
         .sheet(isPresented: $showingAddTask) {
