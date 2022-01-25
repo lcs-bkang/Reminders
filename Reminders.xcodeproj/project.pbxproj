@@ -70,9 +70,9 @@
 			isa = PBXGroup;
 			children = (
 				A65C79482799C2A800E9A30F /* RemindersApp.swift */,
+				A65C79662799C2EE00E9A30F /* Models */,
 				A65C796E2799C3B100E9A30F /* ViewModels */,
 				A65C79672799C30400E9A30F /* Views */,
-				A65C79662799C2EE00E9A30F /* Models */,
 				A65C794A2799C2AF00E9A30F /* Assets.xcassets */,
 			);
 			path = Shared;
