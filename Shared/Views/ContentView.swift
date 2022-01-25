@@ -15,6 +15,9 @@ struct ContentView: View {
     // Control whether the add task is showing
     @State private var showingAddTask = false
     
+    // Whether to show completed tasks or not
+    @State var showingCompletedTask = true
+    
     var body: some View {
         List {
             ForEach(store.tasks) { task in
@@ -33,6 +36,16 @@ struct ContentView: View {
             }
             ToolbarItem(placement: .navigationBarLeading) {
                 EditButton()
+            }
+            
+            ToolbarItem(placement: .bottomBar) {
+                // Ternary operators work as following
+                // (Value) ? (Show when value is true) : (Show when value is false)
+                Button(showingCompletedTask ? "Hide completedtasks" : "Show completed tasks") {
+                    print("Value of showingCompletedTask was: \(showingCompletedTask)")
+                    showingCompletedTask.toggle()
+                    print("Value of showingCompletedTask is now: \(showingCompletedTask)")
+                }
             }
         }
         .sheet(isPresented: $showingAddTask) {
