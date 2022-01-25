@@ -57,13 +57,36 @@ struct ContentView: View {
                 ForEach(store.tasks) { task in
                     
                     if showingCompletedTask {
-                        // Show all tasks
-                        TaskCell(task: task, triggersUpdate: .constant(true))
+                        
+                        if selectedPriorityForVisibleTasks == .all {
+                            // Show all tasks and all priorities
+                            TaskCell(task: task, triggersUpdate: .constant(true))
+                        } else {
+                            
+                            // Only shows tasks of the selected priority
+                            // Although priority and selectedPriorityForVisibleTasks are different
+                            // Data types, (different enumerations) it works because we are comparing
+                            // Raw values, which are both strings
+                            if task.priority.rawValue == selectedPriorityForVisibleTasks.rawValue {
+                                
+                                TaskCell(task: task, triggersUpdate: .constant(true))
+                            }
+                        }
                     } else {
                         
                         // Only show incomplete tasks
                         if task.completed == false {
-                            TaskCell(task: task, triggersUpdate: $listShouldUpdate)
+                            
+                            if selectedPriorityForVisibleTasks == .all {
+                                
+                                // Show all incompleted tasks, no matter priority
+                                TaskCell(task: task, triggersUpdate: $listShouldUpdate)
+                            } else {
+                                if task.priority.rawValue == selectedPriorityForVisibleTasks.rawValue {
+                                    
+                                    TaskCell(task: task, triggersUpdate: $listShouldUpdate)
+                                }
+                            }
                         }
                         
                     }
